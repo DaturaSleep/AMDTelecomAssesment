@@ -30,19 +30,11 @@ public class StringBuilderFormatUtility {
     }
 
     public static StringBuilder wayAppend(StringBuilder stringBuilderToAppend) {
-        if (hasDelimiters(stringBuilderToAppend)) {
-            return appendStringToTheEnd(stringBuilderToAppend, findDelimiterIndex(stringBuilderToAppend), WAY);
-        } else {
-            return appendStringToTheEnd(stringBuilderToAppend, WAY);
-        }
+        return hasDelimiters(stringBuilderToAppend) ? appendStringToTheEnd(stringBuilderToAppend, findDelimiterIndex(stringBuilderToAppend), WAY) : appendStringToTheEnd(stringBuilderToAppend, WAY);
     }
 
     public static StringBuilder ayAppend(StringBuilder stringBuilderToAppend) {
-        if (hasDelimiters(stringBuilderToAppend)) {
-            return appendStringToTheEnd(stringBuilderToAppend, findDelimiterIndex(stringBuilderToAppend), AY);
-        } else {
-            return appendStringToTheEnd(stringBuilderToAppend, AY);
-        }
+        return hasDelimiters(stringBuilderToAppend) ? appendStringToTheEnd(stringBuilderToAppend, findDelimiterIndex(stringBuilderToAppend), AY) : appendStringToTheEnd(stringBuilderToAppend, AY);
     }
 
     public static int findDelimiterIndex(StringBuilder stringBuilderThatContainsDelimiter) {
@@ -51,11 +43,7 @@ public class StringBuilderFormatUtility {
     }
 
     public static StringBuilder putFirstCharToTheEnd(StringBuilder stringBuilderToChange) {
-        if (hasDelimiters(stringBuilderToChange)) {
-            return appendFirstCharToTheEnd(stringBuilderToChange, findDelimiterIndex(stringBuilderToChange));
-        } else {
-            return appendFirstCharToTheEnd(stringBuilderToChange);
-        }
+        return hasDelimiters(stringBuilderToChange) ? appendFirstCharToTheEnd(stringBuilderToChange, findDelimiterIndex(stringBuilderToChange)) : appendFirstCharToTheEnd(stringBuilderToChange);
     }
 
     private static StringBuilder appendStringToTheEnd(StringBuilder stringBuilderToChange, String stringToAppend) {
@@ -89,19 +77,11 @@ public class StringBuilderFormatUtility {
 
     public static boolean hasDelimiters(StringBuilder stringBuilderToCheck) {
         Matcher matcher = NO_LETTER_CHARACTER_PATTERN.matcher(stringBuilderToCheck);
-        if (matcher.find()) {
-            return true;
-        } else {
-            return false;
-        }
+        return matcher.find();
     }
 
     public static boolean containsAlphaCharacters(StringBuilder stringBuilderToCheck) {
         Matcher matcher = NO_LETTER_IN_STRING_CHARACTER_PATTERN.matcher(stringBuilderToCheck);
-        if (matcher.matches()) {
-            return false;
-        } else {
-            return true;
-        }
+        return !matcher.matches();
     }
 }

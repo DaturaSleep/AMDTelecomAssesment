@@ -20,14 +20,22 @@ class ValidationTests {
     @Test
     @DisplayName("Number finder should display not found message if array is null")
     void should_displayNotFoundMessage_when_arrayIsNull() {
-        assertEquals(NUMBER_FINDER.getNotFoundString(), NUMBER_FINDER.findSeven(nullArray),
+        final String expected = NUMBER_FINDER.getNotFoundString();
+
+        final String actual = NUMBER_FINDER.findSeven(nullArray);
+
+        assertEquals(expected, actual,
                 "number finder should display not found message if array is null");
     }
 
     @Test
     @DisplayName("Number finder should display not found message if array is empty")
     void should_displayNotFoundMessage_when_arrayIsEmpty() {
-        assertEquals(NUMBER_FINDER.getNotFoundString(), NUMBER_FINDER.findSeven(emptyArray),
+        final String expected = NUMBER_FINDER.getNotFoundString();
+
+        final String actual = NUMBER_FINDER.findSeven(emptyArray);
+
+        assertEquals(expected, actual,
                 "number finder should display not found message if array is empty");
     }
 

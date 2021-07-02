@@ -12,8 +12,8 @@ import static main.java.task1.NumberFinderValidator.isValid;
  */
 public class NumberFinder {
 
-    private final Integer NUMBER_TO_FIND = 7;
-    private final String NOT_FOUND = String.format("there is no %d in the array", NUMBER_TO_FIND);
+    private final Integer NUMBER_SEVEN = 7;
+    private final String NOT_FOUND = String.format("there is no %d in the array", NUMBER_SEVEN);
     private final String FOUND = "Found";
 
 
@@ -34,7 +34,7 @@ public class NumberFinder {
 
     private boolean containsNumberToFind(int number) {
         while (number > 0) {
-            if (number % 10 == NUMBER_TO_FIND) {
+            if (number % 10 == NUMBER_SEVEN) {
                 return true;
             }
             number = number / 10;
@@ -67,6 +67,6 @@ public class NumberFinder {
      * @return NUMBER_TO_FIND integer
      */
     public Integer getNumberToFind() {
-        return NUMBER_TO_FIND;
+        return NUMBER_SEVEN;
     }
 }

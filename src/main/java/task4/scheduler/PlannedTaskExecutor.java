@@ -15,6 +15,12 @@ public class PlannedTaskExecutor {
     private static final Integer INITIAL_DELAY_IN_MINUTES = 0;
     private static final Integer PERIOD_OF_EXECUTION_IN_MINUTES = 10;
     private static final Integer ONE_HUNDRED_MINUTES_IN_MILLIS = 6000000;
+    private static final Integer TEMPERATURE_LIMIT = 20;
+
+    public static void main(String[] args) {
+        executePlannedTask();
+    }
+
 
     /**
      * executePlannedTask method
@@ -25,7 +31,7 @@ public class PlannedTaskExecutor {
     public static void executePlannedTask() {
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
         executorService.scheduleAtFixedRate(
-                new SendSMSWithTemperatureTask(),
+                new SendSMSWithTemperatureTask(TEMPERATURE_LIMIT),
                 INITIAL_DELAY_IN_MINUTES,
                 PERIOD_OF_EXECUTION_IN_MINUTES,
                 TimeUnit.MINUTES);

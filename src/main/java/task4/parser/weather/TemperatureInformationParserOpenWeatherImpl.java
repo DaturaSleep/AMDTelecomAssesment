@@ -33,10 +33,8 @@ public class TemperatureInformationParserOpenWeatherImpl implements TemperatureI
                 return Double.parseDouble(temperature);
             } catch (NumberFormatException exception) {
                 LOG.severe("Could not parse temperature, null value will be returned: " + exception.getMessage());
-                return null;
             }
-        } else {
-            return null;
         }
+        return null;
     }
 }

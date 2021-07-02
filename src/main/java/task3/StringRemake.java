@@ -33,7 +33,7 @@ public class StringRemake {
                         .toLowerCase()
                         .trim()
                         .split(SPACING_REGEX))
-                        .map(string -> new StringBuilder(string))
+                        .map(StringBuilder::new)
                         .peek(StringBuilderFormatUtility::applyChangesToStringBuilder)
                         .toArray(StringBuilder[]::new)
         );

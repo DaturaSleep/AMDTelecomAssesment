@@ -11,8 +11,13 @@ import java.util.TimerTask;
  * class that represents TimerTask
  */
 public class SendSMSWithTemperatureTask extends TimerTask {
-    private static final SendSMS SEND_SMS = new RouteeSendSMS();
     private static final TemperatureGathererOpenWeatherImpl TEMPERATURE_GATHERER_OPEN_WEATHER = new TemperatureGathererOpenWeatherImpl();
+
+    private final SendSMS SEND_SMS;
+
+    public SendSMSWithTemperatureTask(Integer temperature){
+        this.SEND_SMS = new RouteeSendSMS(temperature);
+    }
 
     /**
      * run method

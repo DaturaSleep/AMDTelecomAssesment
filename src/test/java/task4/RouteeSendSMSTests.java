@@ -18,7 +18,7 @@ class RouteeSendSMSTests {
     @Test
     @DisplayName("SMS should be sent successfully when temperature is less that 20 and higher than 20")
     void should_sendSMS_without_anyExceptions() {
-        SendSMS smsSender = new RouteeSendSMS();
+        SendSMS smsSender = new RouteeSendSMS(20);
 
         Double temperature1 = 19.0;
         Double temperature2 = 21.0;

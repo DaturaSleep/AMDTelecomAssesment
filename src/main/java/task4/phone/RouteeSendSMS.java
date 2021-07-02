@@ -20,14 +20,25 @@ import java.util.logging.Logger;
  */
 public class RouteeSendSMS implements SendSMS {
     private static final Logger LOG = Logger.getLogger(RouteeSendSMS.class.getName());
-    private static final PhoneURIAndDataStorage uriAndDataStorage = new RouteeOpenWeatherURIStorage();
-    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandlerBasicJavaImpl();
-    private static final RouteeAuthenticator authenticator = new RouteeAuthenticator();
+    private static final PhoneURIAndDataStorage URI_AND_DATA_STORAGE = new RouteeOpenWeatherURIStorage();
+    private static final HttpRequestHandler HTTP_REQUEST_HANDLER = new HttpRequestHandlerBasicJavaImpl();
+    private static final RouteeAuthenticator AUTHENTICATOR = new RouteeAuthenticator();
+    private static final String BEARER = "Bearer ";
+
+    private final Integer temperatureLimit;
+    private final String temperatureLessLimitMessage;
+    private final String temperatureMoreLimitMessage;
+
+    public RouteeSendSMS(Integer temperatureLimit) {
+        this.temperatureLimit = temperatureLimit;
+        this.temperatureLessLimitMessage = "Temperature is less than " + temperatureLimit + "C";
+        this.temperatureMoreLimitMessage = "Temperature is more than " + temperatureLimit + "C";
+    }
 
     /**
      * sendSMS method
      * sends SMS with the passed temperature,
-     * if temperature is more than 20, than number should be changed
+     * if temperature is more than temperatureLimit variable, than number should be changed
      *
      * @param temperature to send
      * @return Integer - sending status
@@ -36,18 +47,18 @@ public class RouteeSendSMS implements SendSMS {
     public Integer sendSMS(Double temperature) {
         LOG.info("SMS sending process started");
 
-        Map<DataType, String> dataForRequestMap = uriAndDataStorage.getPhoneURLAndData();
-        String authToken = "Bearer " + authenticator.getAuthToken();
-        String numberToSend = temperature >= 20 ?
+        Map<DataType, String> dataForRequestMap = URI_AND_DATA_STORAGE.getPhoneURLAndData();
+        String authToken = BEARER + AUTHENTICATOR.getAuthToken();
+        String numberToSend = temperature >= temperatureLimit ?
                 dataForRequestMap.get(DataType.NUMBER_TO_SEND_IN_HOT_WEATHER) :
                 dataForRequestMap.get(DataType.NUMBER_TO_SEND_COLD_WEATHER);
-        String messageText = temperature >= 20 ? "Temperature is more than 20C" : "Temperature is less than 20C";
+        String messageText = temperature >= temperatureLimit ? temperatureMoreLimitMessage : temperatureLessLimitMessage;
 
         String body = SMSMessageBuilder.buildSMSMessage(dataForRequestMap.get(DataType.SENDER) + messageText,
                 dataForRequestMap.get(DataType.SENDER),
                 numberToSend);
 
-        HttpResponse response = httpRequestHandler.sendPostRequest(
+        HttpResponse response = HTTP_REQUEST_HANDLER.sendPostRequest(
                 getURIFromStringURL(dataForRequestMap.get(DataType.APPLICATION_URL)),
                 body,
                 dataForRequestMap.get(DataType.CONTENT_TYPE_HEADER),

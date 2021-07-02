@@ -23,6 +23,7 @@ public class RouteeAuthenticator {
 
     private static final String APPLICATION_KEY = "5c5d5e28e4b0bae5f4accfec";
     private static final String APPLICATION_SECRET = "MGkNfqGud0";
+    private static final String BASIC = "Basic ";
 
     private final HttpRequestHandler httpRequestMaker = new HttpRequestHandlerBasicJavaImpl();
     private final RouteTokenParser routeTokenParser = new RouteTokenParser();
@@ -39,7 +40,7 @@ public class RouteeAuthenticator {
     }
 
     private HttpResponse<String> authenticate() {
-        StringBuilder authHeaderBuilder = new StringBuilder("Basic " + encode(APPLICATION_KEY + ":" + APPLICATION_SECRET));
+        StringBuilder authHeaderBuilder = new StringBuilder(BASIC + encode(APPLICATION_KEY + ":" + APPLICATION_SECRET));
         URI applicationURI = null;
         try {
             applicationURI = new URI(APPLICATION_URL);
